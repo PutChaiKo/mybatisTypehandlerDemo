@@ -141,7 +141,7 @@ NameAndColor selectDogNameAndColor(Integer id);
 | ListDateHandler  | List&lt;Date&gt;  | date[]  |
 | ListIntegerHandler  | List&lt;Integer&gt;  | integer[]  |
 
-把这些 typeHandler 用来写一个完整的 dog 类是这样的：
+把这些 typeHandler 全都用一下，以及各种类型的使用方法可以参考下面的代码，完整的代码我放在 github 上了，链接在文章底部，这里看着有点乱的可以 clone 一下到本地跑一下  
 
 Dog.java
 ```java
@@ -281,4 +281,4 @@ curl --location --request PUT 'http://127.0.0.1:8081/xml/dog' \
 }'
 ```
 
-示例完整的代码放在github上 https://github.com/PutChaiKo/mybatisTypehandlerDemo
+示例完整的代码放在： https://github.com/PutChaiKo/mybatisTypehandlerDemo

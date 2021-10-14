@@ -1,5 +1,12 @@
 # 一个好用的 mybatis Typehandler 小工具
-首先来建一个 postgresql 数据库的表  
+在PostgreSql数据库中，有时候会看到 varchar[] 这样的数据类型的列，里面存着类似'{1, 2, 3}'的数组，当你想把它通过mybatis进行查询、修改的时候就会发现非常麻烦，java 这边一般用的类型是 List&lt;String&gt; ，但要不取出来是 null 要不就直接报错，网上搜索的解决方法基本都是自己实现一个转换的工具，麻烦不说，还要在项目里引入不少代码，出问题不好维护。作为一个CV工程师我常常在想总有人写过类似的功能吧。
+  
+在 中央仓库上找到一个项目就是一个已经实现的 typeHandler   
+链接：[https://mvnrepository.com/artifact/io.github.gaojizhou/MybatisTypeHandler](https://mvnrepository.com/artifact/io.github.gaojizhou/MybatisTypeHandler)
+
+接下来看看这东西怎么用  
+
+首先来建一个 postgresql 数据库的表作为测试环境  
 ```postgresql
 -- 创建表
 create table dog
@@ -67,15 +74,15 @@ NameAndColor selectDogNameAndColor(Integer id);
     "colors": null
 }
 ```
-原因其实很简单，mybatis 不能处理 varchar[] 和 List<String> 之间的转换。  
-但其实数据库的 varchar 和 java 的 String 也不是一个东西，mybatis 维护了一套默认的类型处理器（typeHandlers）：  
-[点击查看 mybatis 官方 typeHandlers 列表](https://mybatis.org/mybatis-3/configuration.html)  
+原因其实就是 mybatis 不能处理 varchar[] 和 List<String> 之间的转换。  
+但数据库的 varchar 和 java 的 String 也不是一个东西，mybatis 维护了一套[默认的类型处理器（typeHandlers）](https://mybatis.org/mybatis-3/configuration.html)  
 里面提供了诸如 boolean、byte、int、BigDecimal和对应数据库类型的转换处理器，简单的增删改查基本可以满足。  
 mybatis 不支持的类型之间的之间的转换，官方建设是自己继承 BaseTypeHandler 实现一套，但类似 List&lt;String&gt; 这种常见的类型就没必要造轮子了。
 
-github 项目 MybatisTypeHandler 就是一个已经实现的 typeHandler   
-链接：[https://github.com/gaojizhou/MybatisTypeHandler](https://github.com/gaojizhou/MybatisTypeHandler)  
-使用也非常简单：  
+MybatisTypeHandler 项目就是一个已经实现的 typeHandler  
+官方使用说明（英语）：[https://github.com/gaojizhou/MybatisTypeHandler](https://github.com/gaojizhou/MybatisTypeHandler)  
+MybatisTypeHandler 使用非常简单：
+
 pom.xml 引入依赖
 ```xml
 <!-- 引入 MybatisTypeHandler -->
@@ -83,7 +90,7 @@ pom.xml 引入依赖
     <groupId>io.github.gaojizhou</groupId>
     <artifactId>MybatisTypeHandler</artifactId>
     <!-- 自行选择最新版本的 -->
-    <version>0.0.3</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 

@@ -1,4 +1,4 @@
-# 一个好用的 mybatis Typehandler 小工具
+# mybatis引入typehandler依赖处理varchar[] 数据类型
 在PostgreSql数据库中，有时候会看到 varchar[] 这样的数据类型的列，里面存着类似'{1, 2, 3}'的数组，当你想把它通过mybatis进行查询、修改的时候就会发现非常麻烦，java 这边一般用的类型是 List&lt;String&gt; ，但要不取出来是 null 要不就直接报错，网上搜索的解决方法基本都是自己实现一个转换的工具，麻烦不说，还要在项目里引入不少代码，出问题不好维护。作为一个CV工程师我常常在想总有人写过类似的功能吧。
   
 在 中央仓库上找到一个项目就是一个已经实现的 typeHandler   

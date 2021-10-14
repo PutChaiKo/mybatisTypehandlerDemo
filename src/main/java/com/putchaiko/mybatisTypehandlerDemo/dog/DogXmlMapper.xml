@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.putchaiko.mybatisTypehandlerDemo.dog.DogXmlMapper">
+    <resultMap id="NameAndColorResultMap" type="com.putchaiko.mybatisTypehandlerDemo.dog.NameAndColor">
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="colors" jdbcType="ARRAY" property="colors"
+                typeHandler="io.github.gaojizhou.list.ListStringHandler"/>
+    </resultMap>
+    <select id="selectDogNameAndColor" resultMap="NameAndColorResultMap">
+        SELECT name, colors
+        FROM dog
+        WHERE id = #{id}
+    </select>
+
+    <resultMap id="selectDogResultMap" type="com.putchaiko.mybatisTypehandlerDemo.dog.Dog">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="colors" jdbcType="ARRAY" property="colors"  typeHandler="io.github.gaojizhou.list.ListStringHandler"/>
+        <result column="height_length" jdbcType="ARRAY" property="heightLength"  typeHandler="io.github.gaojizhou.list.ListBigDecimalHandler"/>
+        <result column="vaccination_date" jdbcType="ARRAY" property="vaccinationDate"  typeHandler="io.github.gaojizhou.list.ListDateHandler"/>
+        <result column="vaccination_age" jdbcType="ARRAY" property="vaccinationAge"  typeHandler="io.github.gaojizhou.list.ListIntegerHandler"/>
+        <result column="is_ear_pricked_up" jdbcType="ARRAY" property="isEarPrickedUp"  typeHandler="io.github.gaojizhou.list.ListBooleanHandler"/>
+    </resultMap>
+    <select id="selectDog" resultMap="selectDogResultMap">
+        SELECT id, name, colors, height_length, vaccination_date, vaccination_age, is_ear_pricked_up
+        FROM dog
+        WHERE id = #{id}
+    </select>
+
+    <update id="updateDog">
+        update dog set
+            name = #{name,jdbcType=VARCHAR},
+            colors = #{colors,typeHandler=io.github.gaojizhou.list.ListStringHandler},
+            height_length = #{heightLength,typeHandler=io.github.gaojizhou.list.ListBigDecimalHandler},
+            vaccination_date = #{vaccinationDate,typeHandler=io.github.gaojizhou.list.ListDateHandler},
+            vaccination_age = #{vaccinationAge,typeHandler=io.github.gaojizhou.list.ListIntegerHandler},
+            is_ear_pricked_up = #{isEarPrickedUp,typeHandler=io.github.gaojizhou.list.ListBooleanHandler}
+            where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectDogNames" resultType="java.lang.String">
+        SELECT name
+        FROM dog
+        WHERE id = any(#{ids,jdbcType=ARRAY,typeHandler=io.github.gaojizhou.list.ListIntegerHandler});
+    </select>
+</mapper>

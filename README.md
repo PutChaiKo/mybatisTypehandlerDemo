@@ -172,12 +172,12 @@ public Dog selectDog(@PathVariable(value = "id") Integer id) {
 @PutMapping("/dog")
 Boolean updateDog(@RequestBody Dog dog) {
     return dogMapper.updateDog(dog);
-    
+}
 // 批量获取 dog 的名字
 @GetMapping("/dog_names/{ids}")
 public List<String> selectDogName(@PathVariable(value = "ids") List<Integer> ids) {
         return dogMapper.selectDogNames(ids);
-        }
+}
 ```
 
 Mapper
